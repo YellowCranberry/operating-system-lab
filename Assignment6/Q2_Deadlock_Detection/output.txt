@@ -1,0 +1,40 @@
+===== Deadlock Detection (Wait-For Graph) =====
+
+===== Scenario A (expected: no deadlock) =====
+Allocation
+      R0 R1 R2
+  P0   1  0  0
+  P1   0  1  0
+  P2   0  0  1
+  P3   0  0  0
+Request
+      R0 R1 R2
+  P0   0  1  0
+  P1   0  0  1
+  P2   0  0  0
+  P3   1  0  0
+Wait-for graph edges:
+  P0 -> P1
+  P1 -> P2
+  P3 -> P0
+No deadlock detected (wait-for graph is acyclic).
+
+===== Scenario B (expected: deadlock) =====
+Allocation
+      R0 R1 R2
+  P0   1  0  0
+  P1   0  1  0
+  P2   0  0  1
+  P3   0  0  0
+Request
+      R0 R1 R2
+  P0   0  1  0
+  P1   0  0  1
+  P2   1  0  0
+  P3   0  1  0
+Wait-for graph edges:
+  P0 -> P1
+  P1 -> P2
+  P2 -> P0
+  P3 -> P1
+Deadlock DETECTED. Cycle: P0 -> P1 -> P2 -> P0

@@ -1,0 +1,37 @@
+===== resourceorder_bad.c run =====
+
+===== Q3: BAD version (inconsistent lock order) =====
+Expected outcome: Process A and Process B deadlock; the
+watchdog forcibly terminates them after a bounded timeout.
+
+Process A starting: will acquire Lock1 then Lock2
+Process A acquired Lock1
+Process B starting: will acquire Lock2 then Lock1
+Process B acquired Lock2
+Process B waiting for Lock1
+Process A waiting for Lock2
+
+Watchdog: timeout reached -- A and B are still deadlocked.
+Watchdog: killing Process A (pid 206) and Process B (pid 207)
+
+===== Q3 BAD version finished (deadlock reproduced and safely terminated by watchdog) =====
+
+
+===== resourceorder_fixed.c run =====
+
+===== Q3: FIXED version (consistent lock order: Lock1 -> Lock2) =====
+
+Process A starting: will acquire Lock1 then Lock2 (global order)
+Process A acquired Lock1
+Process B starting: will acquire Lock1 then Lock2 (global order)
+Process A acquired Lock2
+Process A completed work
+Process A released Lock2
+Process B acquired Lock1
+Process A released Lock1
+Process B acquired Lock2
+Process B completed work
+Process B released Lock2
+Process B released Lock1
+
+===== Q3 FIXED version finished: both processes completed, no deadlock =====

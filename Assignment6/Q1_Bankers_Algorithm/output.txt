@@ -1,0 +1,50 @@
+===== Banker's Algorithm =====
+
+Allocation
+      R0  R1  R2
+  P0   0   1   0
+  P1   2   0   0
+  P2   3   0   2
+  P3   2   1   1
+  P4   0   0   2
+
+Max
+      R0  R1  R2
+  P0   7   5   3
+  P1   3   2   2
+  P2   9   0   2
+  P3   2   2   2
+  P4   4   3   3
+
+Need
+      R0  R1  R2
+  P0   7   4   3
+  P1   1   2   2
+  P2   6   0   0
+  P3   0   1   1
+  P4   4   3   1
+
+Available   3   3   2
+
+-- Initial safety check --
+System is in a SAFE state. Safe sequence: P1 -> P3 -> P4 -> P0 -> P2
+
+-- Request from P1: (1, 0, 2) --
+Request granted. New state is safe. Safe sequence: P1 -> P3 -> P4 -> P0 -> P2
+Allocation (after P1 request)
+      R0  R1  R2
+  P0   0   1   0
+  P1   3   0   2
+  P2   3   0   2
+  P3   2   1   1
+  P4   0   0   2
+
+Available   2   3   0
+
+-- Request from P0: (2, 3, 0) --
+Request denied -- would lead to unsafe state
+
+-- Request from P0: (8, 0, 0) --
+Request denied -- exceeds process's declared maximum need
+
+===== End of demonstration =====

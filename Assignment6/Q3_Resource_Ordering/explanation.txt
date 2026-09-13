@@ -1,0 +1,19 @@
+### Deadlock Prevention via Resource Hierarchy
+
+**Mechanism of Circular Wait in the Unordered Implementation**
+Deadlock arises because the two processes request shared locks in opposing sequences:
+
+* Process A claims Lock1, then blocks while waiting for Lock2.
+* Process B claims Lock2, then blocks while waiting for Lock1.
+
+Because an intentional delay separates each lock acquisition, both threads successfully grab their initial lock before either can secure its second. Consequently, Process A holds the exact lock Process B requires, while Process B holds the lock Process A needs. This establishes a closed dependency loop ($A \to B \to A$) within the resource allocation graph. Because mutual exclusion, hold-and-wait, and no-preemption are also present, execution stalls indefinitely.
+
+---
+
+**Eliminating Cycles via Total Resource Ordering**
+Assigning a global acquisition hierarchy (e.g., $\text{Lock1} < \text{Lock2}$) breaks this cycle. Under this constraint, any thread requiring multiple locks must claim them strictly in ascending numerical order, never requesting a lower-ranked lock while holding a higher-ranked one. Because every thread follows the same directional flow, a backward-facing dependency cannot occur, making circular wait structurally impossible.
+
+---
+
+**Deadlock Invalidation via Coffman's Conditions**
+A deadlock requires all four of Coffman’s conditions to be met simultaneously: mutual exclusion, hold-and-wait, no preemption, and circular wait. Enforcing strict lock hierarchy eliminates circular wait by design rather than relying on favorable thread scheduling. Even though the remaining three conditions persist, removing this single requirement guarantees deadlock cannot take place. The corrected implementation illustrates this directly: under the exact same timing delays, both threads request Lock1 before Lock2, allowing execution to finish without stalling.

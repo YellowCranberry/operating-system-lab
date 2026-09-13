@@ -1,0 +1,14 @@
+STRATEGY -- Question 4: Combined Synchronization & Deadlock Avoidance
+========================================================================
+
+Resource ordering: Printer(0) < Scanner(1) < Disk(2).
+Every process acquires its two needed resource types strictly in this
+order and releases them in reverse order, so no process ever holds a
+higher-ordered resource while requesting a lower-ordered one. This
+makes circular wait structurally impossible across all 5 processes,
+regardless of scheduling interleaving -- confirmed by the run below,
+which used 2 work cycles per process (10 total task instances) with no
+process ever blocked longer than another process's critical section,
+no resource pool ever exceeding its instance count (enforced by the
+pipe-based counting semaphores), and all 5 processes completing every
+cycle without hanging.

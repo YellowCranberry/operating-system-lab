@@ -1,0 +1,96 @@
+===== Q4: Combined Synchronization & Deadlock Avoidance =====
+Strategy: Resource ordering (Printer < Scanner < Disk)
+Pool sizes -> Printer=2 Scanner=1 Disk=2
+
+P0 starting cycle 0 (needs Printer + Scanner)
+P0 requesting Printer
+P0 granted Printer
+P0 requesting Scanner
+P0 granted Scanner
+P0 starting work (cycle 0)
+P1 starting cycle 0 (needs Printer + Disk)
+P1 requesting Printer
+P1 granted Printer
+P1 requesting Disk
+P1 granted Disk
+P1 starting work (cycle 0)
+P2 starting cycle 0 (needs Scanner + Disk)
+P2 requesting Scanner
+P3 starting cycle 0 (needs Printer + Disk)
+P3 requesting Printer
+P4 starting cycle 0 (needs Printer + Scanner)
+P4 requesting Printer
+P1 work completed (cycle 0)
+P1 releasing Disk
+P3 granted Printer
+P3 requesting Disk
+P3 granted Disk
+P3 starting work (cycle 0)
+P0 work completed (cycle 0)
+P0 releasing Scanner
+P0 releasing Printer
+P0 starting cycle 1 (needs Printer + Scanner)
+P0 requesting Printer
+P0 granted Printer
+P0 requesting Scanner
+P0 granted Scanner
+P0 starting work (cycle 1)
+P1 releasing Printer
+P1 starting cycle 1 (needs Printer + Disk)
+P1 requesting Printer
+P3 work completed (cycle 0)
+P3 releasing Disk
+P4 granted Printer
+P4 requesting Scanner
+P0 work completed (cycle 1)
+P2 granted Scanner
+P2 requesting Disk
+P2 granted Disk
+P2 starting work (cycle 0)
+P3 releasing Printer
+P3 starting cycle 1 (needs Printer + Disk)
+P3 requesting Printer
+P0 releasing Scanner
+P1 granted Printer
+P1 requesting Disk
+P1 granted Disk
+P1 starting work (cycle 1)
+P0 releasing Printer
+P2 work completed (cycle 0)
+P2 releasing Disk
+P4 granted Scanner
+P4 starting work (cycle 0)
+P1 work completed (cycle 1)
+P1 releasing Disk
+P3 granted Printer
+P3 requesting Disk
+P3 granted Disk
+P3 starting work (cycle 1)
+P2 releasing Scanner
+P2 starting cycle 1 (needs Scanner + Disk)
+P2 requesting Scanner
+P1 releasing Printer
+P4 work completed (cycle 0)
+P2 granted Scanner
+P2 requesting Disk
+P2 granted Disk
+P2 starting work (cycle 1)
+P3 work completed (cycle 1)
+P3 releasing Disk
+P3 releasing Printer
+P4 releasing Scanner
+P4 releasing Printer
+P4 starting cycle 1 (needs Printer + Scanner)
+P4 requesting Printer
+P4 granted Printer
+P4 requesting Scanner
+P2 work completed (cycle 1)
+P2 releasing Disk
+P4 granted Scanner
+P4 starting work (cycle 1)
+P2 releasing Scanner
+P4 work completed (cycle 1)
+P4 releasing Scanner
+P4 releasing Printer
+
+===== All 5 processes completed 2 cycle(s) each with no deadlock =====
